@@ -6,3 +6,200 @@ Medium green: #55c57a
 Dark green: #28b485
 
 */
+
+/*
+
+NORMALIZE
+
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #777;
+  padding: 30px;
+}
+
+/* ################### ASYMETRICAL HEADER ################### */
+
+.header {
+  height: 95vh;
+  background-image: linear-gradient(
+      to right bottom,
+      hsla(111, 55%, 64%, 0.801),
+      hsla(160, 64%, 43%, 0.8)
+    ),
+    url(../img/hero.jpg);
+  background-size: cover;
+  background-position: top;
+  position: relative;
+
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
+
+/* ################### CENTERING THE LOGO TEXT BOX ################### */
+.logo-box {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
+.logo {
+  height: 35px;
+}
+
+.text-box {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  /* centered the textbox from the center of the textbox itsself, rather than from it's right edge */
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* ################### H1 ANIMATION ################### */
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+
+  /* fixes the shaking at the end of the animation */
+  backface-visibility: hidden;
+  margin-bottom: 60px;
+}
+
+.heading-primary-main {
+  display: block;
+  font-size: 60px;
+  font-weight: 400;
+  letter-spacing: 35px;
+
+  animation-name: moveInLeft;
+  animation-duration: 3s;
+  animation-timing-function: east-out;
+
+  /*
+   animation-delay: 3s; 
+   animation-iteration-count: 2;
+   */
+}
+
+.heading-primary-sub {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 17.4px;
+
+  animation: moveInRight 1s ease-out;
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  80% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  80% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+/* ################### BUTTON ANIMATION ################### */
+@keyframes moveInBtn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 40px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.btn:hover {
+  /* makes the button move up when hovered by 3px */
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-white {
+  background-color: #fff;
+  color: #777;
+}
+.btn::after {
+  /* display and content have to be specificed, even if they are set to empty strings */
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+
+  /* positions the after element behind the element. absolute needs to have a ref, which will be the first element with a relative position it can find. We make the reference the button the after refers to so we set the poisition property of the button to relative */
+  position: absolute;
+  top: 0;
+  left: 0;
+  /*  Defines the position of the element if there are elements stacked on top of each other. -1 ensures this is on the bottom*/
+  z-index: -1;
+  /* keys in the ignition for animation. must go on the intial state of the elements being animated, does not have to be all, can specifiy the transform 's to be applied*/
+  transition: all 0.4s;
+}
+
+.btn-white::after {
+  background-color: white;
+}
+
+.btn:hover::after {
+  /* the top of the bottom looked funny when we just scaled so we scaled the x smaller than the y */
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+.btn-animated {
+  /* adding the transition in, keys in the ignition. created a separate class because we only want to target THIS button with animaiton. in order: animation name, animation duration, timing function, delay */
+  animation: moveInBtn 0.5 ease-out 0.75s;
+  /* this addresses the buttons initial visiblity by automatically apply the styles we set in the animation and work backwards to the true state of the element */
+  animation-fill-mode: backwards;
+}
